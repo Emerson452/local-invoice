@@ -108,7 +108,7 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data }) => {
         heightLeft -= pageHeight;
       }
 
-      pdf.save(`${data.invoiceName}.pdf`);
+      pdf.save(`${data.invoiceName}-${data.companyName}.pdf`);
     }
   };
 
