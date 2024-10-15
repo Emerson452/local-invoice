@@ -1,0 +1,136 @@
+.invoice-preview {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.invoice-top,
+.invoice-actors {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  width: 150px;
+}
+
+.invoice-details {
+  text-align: end;
+  padding: 0;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0.5rem;
+}
+
+.invoice-actors {
+  margin: 6% 0;
+  align-items: baseline;
+}
+
+.invoice-actors ul li,
+h4 {
+  font-size: 0.8rem;
+}
+
+h4 {
+  margin: 0 0 2% 0;
+  color: #777;
+}
+
+.author {
+  margin-right: 25%;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.strong {
+  font-weight: bold;
+}
+
+.siret {
+  margin-top: 1rem;
+}
+
+.client {
+  margin-right: 15%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15%;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  font-size: 0.8rem;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.description-cell {
+  width: 40%;
+}
+
+.container-price {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10%;
+}
+
+.price-details {
+  display: inline-block;
+  min-width: 25%;
+}
+
+.price-details p {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  font-size: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total-ttc {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.invoice-conditions {
+  display: flex;
+  gap: 5%;
+}
+
+h2 {
+  font-size: 0.8rem;
+}
+
+.invoice-delay {
+  margin-top: 20%;
+  text-align: center;
+}
+
+.personal-information {
+  text-align: center;
+}
