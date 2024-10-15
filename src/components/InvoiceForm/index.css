@@ -107,5 +107,6 @@ input[type="file"] {
 
 textarea {
   min-height: 20%;
+  height: 6rem;
   padding: 10px;
 }

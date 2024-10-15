@@ -16,7 +16,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit }) => {
 
   const formatDateForDisplay = (date: string) => {
     const [year, month, day] = date.split("-");
-    return `${year}-${day}-${month}`;
+    return `${day}/${month}/${year}`;
   };
 
   const [formData, setFormData] = useState({
@@ -25,6 +25,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit }) => {
     companyAddress: "",
     companyPostalCode: "",
     companyCity: "",
+    companySiret: "",
     invoiceYear: "",
     invoiceNumber: "",
     invoiceDate: getTodayDate(),
@@ -157,6 +158,12 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit }) => {
                 type="text"
                 name="companyName"
                 placeholder="Nom de l'entreprise"
+                onChange={handleChange}
+              />
+              <input
+                type="text"
+                name="companySiret"
+                placeholder="Siret"
                 onChange={handleChange}
               />
               <input
