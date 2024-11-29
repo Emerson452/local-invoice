@@ -126,13 +126,13 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, mode }) => {
           )}
           <div className="invoice-details">
             <h2>
-              {mode === "facture" ? "Facture" : "Devis"} {invoiceName}
+              {mode === "facture" ? "Facture" : ""} {invoiceName}
             </h2>
             <div>
               Date de {mode === "facture" ? "facturation" : "création"}:{" "}
               {invoiceDate}
             </div>
-            {mode === "facture" && <div>Échéance: {dueDate}</div>}
+            {mode === "facture" ? "Échéance" : "Validité"}: {dueDate}
             <div>Type d'opération: {operationType}</div>
           </div>
         </div>
@@ -243,7 +243,11 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, mode }) => {
         </div>
 
         <div className="invoice-conditions">
-          <p className="strong">Conditions de paiement:</p>
+          {mode === "facture" ? (
+            <p className="strong">Conditions de paiement: </p>
+          ) : (
+            <p className="strong">Validité du devis: </p>
+          )}
           <p>{paymentTerms} jours</p>
         </div>
 

@@ -115,6 +115,14 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
     });
   };
 
+  const handleRemoveItem = (index: number) => {
+    const updatedItems = formData.items.filter((_, i) => i !== index);
+    setFormData({
+      ...formData,
+      items: updatedItems,
+    });
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -329,6 +337,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
                 value={item.unit}
                 onChange={(e) => handleChange(e, index)}
               >
+                <option value="forfait">forfait</option>
                 <option value="jours">jours</option>
                 <option value="h">h</option>
               </select>
@@ -344,6 +353,13 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
                 placeholder="TVA"
                 onChange={(e) => handleChange(e, index)}
               />
+              <button
+                type="button"
+                className="remove-item"
+                onClick={() => handleRemoveItem(index)}
+              >
+                Supprimer
+              </button>
             </div>
           ))}
         </div>
