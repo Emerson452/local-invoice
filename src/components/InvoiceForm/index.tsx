@@ -3,9 +3,10 @@ import "./index.css";
 
 interface InvoiceFormProps {
   onSubmit: (data: any) => void;
+  mode: "facture" | "devis";
 }
 
-const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit }) => {
+const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
   const getTodayDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -117,7 +118,9 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const invoiceName = `Facture-${formData.invoiceYear}-${formData.invoiceNumber}`;
+    const invoiceName = `${mode === "facture" ? "Facture" : "Devis"}-${
+      formData.invoiceYear
+    }-${formData.invoiceNumber}`;
 
     const formattedData = {
       ...formData,
@@ -201,7 +204,9 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit }) => {
         </div>
 
         <div className="form-section">
-          <h2>Détails de la facture</h2>
+          <h2>
+            {mode === "facture" ? "Détails de la facture" : "Détails du devis"}
+          </h2>
           <div className="input-container">
             <input
               type="text"

@@ -41,9 +41,10 @@ interface InvoiceData {
 
 interface InvoicePreviewProps {
   data: InvoiceData;
+  mode: "facture" | "devis";
 }
 
-const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data }) => {
+const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, mode }) => {
   const {
     companyLogo,
     companyName,
@@ -124,9 +125,14 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data }) => {
             />
           )}
           <div className="invoice-details">
-            <h2>{invoiceName}</h2>
-            <div>Date de facturation: {invoiceDate}</div>
-            <div>Échéance: {dueDate}</div>
+            <h2>
+              {mode === "facture" ? "Facture" : "Devis"} {invoiceName}
+            </h2>
+            <div>
+              Date de {mode === "facture" ? "facturation" : "création"}:{" "}
+              {invoiceDate}
+            </div>
+            {mode === "facture" && <div>Échéance: {dueDate}</div>}
             <div>Type d'opération: {operationType}</div>
           </div>
         </div>
@@ -158,7 +164,7 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data }) => {
             </ul>
           </div>
           <div>
-            <h4>Facturé à:</h4>
+            <h4>{mode === "facture" ? "Facturé à" : "Client potentiel"}:</h4>
           </div>
           <div className="client">
             <ul>

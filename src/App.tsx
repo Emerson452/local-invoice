@@ -12,8 +12,8 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <InvoiceForm onSubmit={handleFormSubmit} />
-      {invoiceData && <InvoicePreview data={invoiceData} />}
+      <InvoiceForm mode="devis" onSubmit={handleFormSubmit} />
+      {invoiceData && <InvoicePreview mode="devis" data={invoiceData} />}
     </div>
   );
 };
