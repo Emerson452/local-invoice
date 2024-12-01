@@ -3,9 +3,10 @@ import "./index.css";
 
 interface InvoiceFormProps {
   onSubmit: (data: any) => void;
+  mode: "facture" | "devis";
 }
 
-const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit }) => {
+const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
   const getTodayDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -114,10 +115,20 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit }) => {
     });
   };
 
+  const handleRemoveItem = (index: number) => {
+    const updatedItems = formData.items.filter((_, i) => i !== index);
+    setFormData({
+      ...formData,
+      items: updatedItems,
+    });
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const invoiceName = `Facture-${formData.invoiceYear}-${formData.invoiceNumber}`;
+    const invoiceName = `${mode === "facture" ? "Facture" : "Devis"}-${
+      formData.invoiceYear
+    }-${formData.invoiceNumber}`;
 
     const formattedData = {
       ...formData,
@@ -201,7 +212,9 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit }) => {
         </div>
 
         <div className="form-section">
-          <h2>Détails de la facture</h2>
+          <h2>
+            {mode === "facture" ? "Détails de la facture" : "Détails du devis"}
+          </h2>
           <div className="input-container">
             <input
               type="text"
@@ -324,6 +337,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit }) => {
                 value={item.unit}
                 onChange={(e) => handleChange(e, index)}
               >
+                <option value="forfait">forfait</option>
                 <option value="jours">jours</option>
                 <option value="h">h</option>
               </select>
@@ -339,6 +353,13 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit }) => {
                 placeholder="TVA"
                 onChange={(e) => handleChange(e, index)}
               />
+              <button
+                type="button"
+                className="remove-item"
+                onClick={() => handleRemoveItem(index)}
+              >
+                Supprimer
+              </button>
             </div>
           ))}
         </div>

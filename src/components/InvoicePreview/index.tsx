@@ -41,9 +41,10 @@ interface InvoiceData {
 
 interface InvoicePreviewProps {
   data: InvoiceData;
+  mode: "facture" | "devis";
 }
 
-const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data }) => {
+const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, mode }) => {
   const {
     companyLogo,
     companyName,
@@ -124,9 +125,14 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data }) => {
             />
           )}
           <div className="invoice-details">
-            <h2>{invoiceName}</h2>
-            <div>Date de facturation: {invoiceDate}</div>
-            <div>Échéance: {dueDate}</div>
+            <h2>
+              {mode === "facture" ? "Facture" : ""} {invoiceName}
+            </h2>
+            <div>
+              Date de {mode === "facture" ? "facturation" : "création"}:{" "}
+              {invoiceDate}
+            </div>
+            {mode === "facture" ? "Échéance" : "Validité"}: {dueDate}
             <div>Type d'opération: {operationType}</div>
           </div>
         </div>
@@ -158,7 +164,7 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data }) => {
             </ul>
           </div>
           <div>
-            <h4>Facturé à:</h4>
+            <h4>{mode === "facture" ? "Facturé à" : "Client potentiel"}:</h4>
           </div>
           <div className="client">
             <ul>
@@ -237,7 +243,11 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data }) => {
         </div>
 
         <div className="invoice-conditions">
-          <p className="strong">Conditions de paiement:</p>
+          {mode === "facture" ? (
+            <p className="strong">Conditions de paiement: </p>
+          ) : (
+            <p className="strong">Validité du devis: </p>
+          )}
           <p>{paymentTerms} jours</p>
         </div>
 
