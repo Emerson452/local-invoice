@@ -145,7 +145,7 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, mode }) => {
           )}
           <div className="invoice-details">
             <h2>
-              {mode === "facture" ? "Facture" : ""} {invoiceName}
+              {mode === "facture" ? "" : ""} {invoiceName}
             </h2>
             <div>
               Date de {mode === "facture" ? "facturation" : "création"}:{" "}
@@ -182,10 +182,11 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, mode }) => {
               </li>
             </ul>
           </div>
-          <div>
-            <h4>{mode === "facture" ? "Facturé à" : "Client potentiel"}:</h4>
-          </div>
+
           <div className="client">
+            <div className="invoice-to">
+              <h4>{mode === "facture" ? "Facturé à" : "Client potentiel"}:</h4>
+            </div>
             <ul>
               <li className="strong">{clientCompany}</li>
               <li>{clientAddress}</li>
