@@ -39,14 +39,19 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
     clientSIRET: "",
     clientPhone: "",
     clientCode: "",
-    items: [
+    categories: [
       {
-        description: "",
-        date: getTodayDate(),
-        quantity: 0,
-        unit: "jours",
-        unitPrice: 0,
-        vat: 0,
+        name: "", // Nom de la catégorie
+        items: [
+          {
+            description: "",
+            date: getTodayDate(),
+            quantity: 0,
+            unit: "jours",
+            unitPrice: 0,
+            vat: 0,
+          },
+        ], // Liste d'items sous cette catégorie
       },
     ],
     paymentTerms: "0",
@@ -74,13 +79,22 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
-    index?: number
+    categoryIndex?: number,
+    itemIndex?: number
   ) => {
     const { name, value } = e.target;
-    if (index !== undefined) {
-      const items = [...formData.items];
-      items[index] = { ...items[index], [name]: value };
-      setFormData({ ...formData, items });
+
+    if (categoryIndex !== undefined && itemIndex !== undefined) {
+      const updatedCategories = [...formData.categories];
+      updatedCategories[categoryIndex].items[itemIndex] = {
+        ...updatedCategories[categoryIndex].items[itemIndex],
+        [name]: value,
+      };
+      setFormData({ ...formData, categories: updatedCategories });
+    } else if (categoryIndex !== undefined) {
+      const updatedCategories = [...formData.categories];
+      updatedCategories[categoryIndex].name = value;
+      setFormData({ ...formData, categories: updatedCategories });
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -98,29 +112,57 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
     }
   };
 
-  const handleAddItem = () => {
+  const handleAddCategory = () => {
     setFormData({
       ...formData,
-      items: [
-        ...formData.items,
+      categories: [
+        ...formData.categories,
         {
-          description: "",
-          date: getTodayDate(),
-          quantity: 0,
-          unit: "jours",
-          unitPrice: 0,
-          vat: 0,
+          name: "",
+          items: [
+            {
+              description: "",
+              date: getTodayDate(),
+              quantity: 0,
+              unit: "jours",
+              unitPrice: 0,
+              vat: 0,
+            },
+          ],
         },
       ],
     });
   };
 
-  const handleRemoveItem = (index: number) => {
-    const updatedItems = formData.items.filter((_, i) => i !== index);
+  const handleRemoveCategory = (categoryIndex: number) => {
+    const updatedCategories = formData.categories.filter(
+      (_, i) => i !== categoryIndex
+    );
     setFormData({
       ...formData,
-      items: updatedItems,
+      categories: updatedCategories,
     });
+  };
+
+  const handleAddItem = (categoryIndex: number) => {
+    const updatedCategories = [...formData.categories];
+    updatedCategories[categoryIndex].items.push({
+      description: "",
+      date: getTodayDate(),
+      quantity: 0,
+      unit: "jours",
+      unitPrice: 0,
+      vat: 0,
+    });
+    setFormData({ ...formData, categories: updatedCategories });
+  };
+
+  const handleRemoveItem = (categoryIndex: number, itemIndex: number) => {
+    const updatedCategories = [...formData.categories];
+    updatedCategories[categoryIndex].items = updatedCategories[
+      categoryIndex
+    ].items.filter((_, i) => i !== itemIndex);
+    setFormData({ ...formData, categories: updatedCategories });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -134,9 +176,12 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
       ...formData,
       invoiceDate: formatDateForDisplay(formData.invoiceDate),
       dueDate: formatDateForDisplay(formData.dueDate),
-      items: formData.items.map((item) => ({
-        ...item,
-        date: formatDateForDisplay(item.date),
+      categories: formData.categories.map((category) => ({
+        ...category,
+        items: category.items.map((item) => ({
+          ...item,
+          date: formatDateForDisplay(item.date),
+        })),
       })),
       invoiceName,
     };
@@ -310,61 +355,102 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
       </div>
 
       <div className="form-section long">
-        <h2>Détails des articles</h2>
+        <h2>Catégories</h2>
         <div className="input-container">
-          {formData.items.map((item, index) => (
-            <div key={index} className="item">
+          {formData.categories.map((category, categoryIndex) => (
+            <div key={categoryIndex} className="category">
               <input
                 type="text"
-                name="description"
-                placeholder="Description"
-                onChange={(e) => handleChange(e, index)}
+                name="name"
+                placeholder="Nom de la catégorie"
+                value={category.name}
+                onChange={(e) => handleChange(e, categoryIndex)}
               />
-              <input
-                type="date"
-                name="date"
-                value={item.date}
-                onChange={(e) => handleChange(e, index)}
-              />
-              <input
-                type="number"
-                name="quantity"
-                placeholder="Quantité"
-                onChange={(e) => handleChange(e, index)}
-              />
-              <select
-                name="unit"
-                value={item.unit}
-                onChange={(e) => handleChange(e, index)}
-              >
-                <option value="forfait">forfait</option>
-                <option value="jours">jours</option>
-                <option value="h">h</option>
-              </select>
-              <input
-                type="number"
-                name="unitPrice"
-                placeholder="Prix unitaire"
-                onChange={(e) => handleChange(e, index)}
-              />
-              <input
-                type="number"
-                name="vat"
-                placeholder="TVA"
-                onChange={(e) => handleChange(e, index)}
-              />
+              <div className="items-container">
+                {category.items.map((item, itemIndex) => (
+                  <div key={itemIndex} className="item">
+                    <input
+                      type="text"
+                      name="description"
+                      placeholder="Description de l'article"
+                      value={item.description}
+                      onChange={(e) =>
+                        handleChange(e, categoryIndex, itemIndex)
+                      }
+                    />
+                    <input
+                      type="date"
+                      name="date"
+                      value={item.date}
+                      onChange={(e) =>
+                        handleChange(e, categoryIndex, itemIndex)
+                      }
+                    />
+                    <input
+                      type="number"
+                      name="quantity"
+                      placeholder="Quantité"
+                      value={item.quantity}
+                      onChange={(e) =>
+                        handleChange(e, categoryIndex, itemIndex)
+                      }
+                    />
+                    <select
+                      name="unit"
+                      value={item.unit}
+                      onChange={(e) =>
+                        handleChange(e, categoryIndex, itemIndex)
+                      }
+                    >
+                      <option value="forfait">forfait</option>
+                      <option value="jours">jours</option>
+                      <option value="h">h</option>
+                    </select>
+                    <input
+                      type="number"
+                      name="unitPrice"
+                      placeholder="Prix unitaire"
+                      value={item.unitPrice}
+                      onChange={(e) =>
+                        handleChange(e, categoryIndex, itemIndex)
+                      }
+                    />
+                    <input
+                      type="number"
+                      name="vat"
+                      placeholder="TVA"
+                      value={item.vat}
+                      onChange={(e) =>
+                        handleChange(e, categoryIndex, itemIndex)
+                      }
+                    />
+                    <button
+                      type="button"
+                      className="remove-item"
+                      onClick={() => handleRemoveItem(categoryIndex, itemIndex)}
+                    >
+                      Supprimer l'article
+                    </button>
+                  </div>
+                ))}
+              </div>
               <button
                 type="button"
-                className="remove-item"
-                onClick={() => handleRemoveItem(index)}
+                onClick={() => handleAddItem(categoryIndex)}
               >
-                Supprimer
+                + Ajouter un article
+              </button>
+              <button
+                type="button"
+                onClick={() => handleRemoveCategory(categoryIndex)}
+              >
+                Supprimer la catégorie
               </button>
             </div>
           ))}
         </div>
-        <button type="button" onClick={handleAddItem}>
-          + Ajouter un article
+        <button type="button" onClick={handleAddCategory}>
+          + Ajouter une catégorie
         </button>
       </div>
 

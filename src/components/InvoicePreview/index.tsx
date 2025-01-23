@@ -13,6 +13,11 @@ interface InvoiceItem {
   vat: number;
 }
 
+interface InvoiceCategory {
+  name: string;
+  items: InvoiceItem[];
+}
+
 interface InvoiceData {
   companyLogo: string;
   companyName: string;
@@ -34,7 +39,7 @@ interface InvoiceData {
   clientSIRET: string;
   clientPhone: string;
   clientCode: string;
-  items: InvoiceItem[];
+  categories: InvoiceCategory[];
   paymentTerms: string;
   delay: string;
 }
@@ -65,20 +70,34 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, mode }) => {
     clientSIRET,
     clientPhone,
     clientCode,
-    items,
+    categories,
     paymentTerms,
     delay,
   } = data;
 
   const calculateTotalHT = (): number => {
-    return items.reduce((total: number, item: InvoiceItem) => {
-      return total + item.unitPrice * item.quantity;
+    return categories.reduce((total: number, category: InvoiceCategory) => {
+      return (
+        total +
+        category.items.reduce(
+          (subTotal: number, item: InvoiceItem) =>
+            subTotal + item.unitPrice * item.quantity,
+          0
+        )
+      );
     }, 0);
   };
 
   const calculateTotalVAT = (): number => {
-    return items.reduce((total: number, item: InvoiceItem) => {
-      return total + (item.unitPrice * item.quantity * item.vat) / 100;
+    return categories.reduce((total: number, category: InvoiceCategory) => {
+      return (
+        total +
+        category.items.reduce(
+          (subTotal: number, item: InvoiceItem) =>
+            subTotal + (item.unitPrice * item.quantity * item.vat) / 100,
+          0
+        )
+      );
     }, 0);
   };
 
@@ -126,7 +145,7 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, mode }) => {
           )}
           <div className="invoice-details">
             <h2>
-              {mode === "facture" ? "Facture" : ""} {invoiceName}
+              {mode === "facture" ? "" : ""} {invoiceName}
             </h2>
             <div>
               Date de {mode === "facture" ? "facturation" : "création"}:{" "}
@@ -163,10 +182,11 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, mode }) => {
               </li>
             </ul>
           </div>
-          <div>
-            <h4>{mode === "facture" ? "Facturé à" : "Client potentiel"}:</h4>
-          </div>
+
           <div className="client">
+            <div className="invoice-to">
+              <h4>{mode === "facture" ? "Facturé à" : "Client potentiel"}:</h4>
+            </div>
             <ul>
               <li className="strong">{clientCompany}</li>
               <li>{clientAddress}</li>
@@ -190,6 +210,7 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, mode }) => {
           </div>
         </div>
 
+        {/* Tableau des articles avec catégories */}
         <table>
           <thead>
             <tr>
@@ -203,26 +224,37 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, mode }) => {
             </tr>
           </thead>
           <tbody>
-            {items.map((item, index) => (
-              <tr key={index}>
-                <td>{item.description}</td>
-                <td>{item.date}</td>
-                <td>{item.quantity}</td>
-                <td>{item.unit}</td>
-                <td>{item.unitPrice}</td>
-                <td>{item.vat} %</td>
-                <td>
-                  {(
-                    item.unitPrice *
-                    item.quantity *
-                    (1 + item.vat / 100)
-                  ).toFixed(2)}{" "}
-                  €
-                </td>
-              </tr>
+            {categories.map((category, categoryIndex) => (
+              <React.Fragment key={categoryIndex}>
+                {/* Affichage du nom de la catégorie */}
+                <tr>
+                  <td colSpan={7} className="category-name">
+                    <strong>{category.name}</strong>
+                  </td>
+                </tr>
+                {category.items.map((item, itemIndex) => (
+                  <tr key={itemIndex}>
+                    <td>{item.description}</td>
+                    <td>{item.date}</td>
+                    <td>{item.quantity}</td>
+                    <td>{item.unit}</td>
+                    <td>{item.unitPrice}</td>
+                    <td>{item.vat} %</td>
+                    <td>
+                      {(
+                        item.unitPrice *
+                        item.quantity *
+                        (1 + item.vat / 100)
+                      ).toFixed(2)}{" "}
+                      €
+                    </td>
+                  </tr>
+                ))}
+              </React.Fragment>
             ))}
           </tbody>
         </table>
+
         <hr />
         <div className="container-price">
           <div className="price-details">
@@ -231,7 +263,7 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, mode }) => {
               <span>{calculateTotalHT().toFixed(2)} €</span>
             </p>
             <p>
-              <span>TVA {items[0]?.vat}%:</span>
+              <span>TVA:</span>
               <span>{calculateTotalVAT().toFixed(2)} €</span>
             </p>
             <hr />
