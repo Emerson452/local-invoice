@@ -6,9 +6,6 @@ const Home: React.FC = () => {
       <div className="home-header">
         <h1>Facturation</h1>
       </div>
-      <div className="home-main">
-        <button className="home-button">En savoir plus</button>
-      </div>
     </div>
   );
 };
