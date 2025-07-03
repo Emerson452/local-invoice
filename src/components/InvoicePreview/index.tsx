@@ -140,7 +140,7 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, mode }) => {
             <img
               src={companyLogo}
               alt="Logo de l'entreprise"
-              className="logo"
+              className="logo-invoice"
             />
           )}
           <div className="invoice-details">
