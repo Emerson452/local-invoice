@@ -205,7 +205,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
                 className="hidden-file-input"
               />
 
-              <label htmlFor="fileInput" className="primary">
+              <label htmlFor="fileInput" className="primary-input">
                 Choisir une image
               </label>
             </div>

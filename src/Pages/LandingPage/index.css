@@ -70,6 +70,7 @@
   line-height: 1.1;
   margin-bottom: 1.5rem;
   color: #1f2937;
+  text-align: start;
 }
 
 .highlight {
@@ -80,6 +81,7 @@
   font-size: 1.25rem;
   color: #6b7280;
   margin-bottom: 2rem;
+  text-align: start;
 }
 
 .hero-features {
@@ -103,47 +105,7 @@
 
 .hero-buttons {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.primary-button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: #2563eb;
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 0.75rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
-}
-
-.primary-button:hover {
-  background: #1d4ed8;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
-}
-
-.secondary-button {
-  background: white;
-  color: #374151;
-  border: 2px solid #e5e7eb;
-  padding: 1rem 2rem;
-  border-radius: 0.75rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.secondary-button:hover {
-  border-color: #2563eb;
-  color: #2563eb;
+  gap: 16px;
 }
 
 .hero-image {
@@ -223,6 +185,10 @@
   border-bottom: 1px solid #f3f4f6;
 }
 
+.invoice-line span {
+  color: black;
+}
+
 .invoice-total {
   margin-top: 1rem;
   padding-top: 1rem;
@@ -291,7 +257,6 @@
   line-height: 1.6;
 }
 
-/* CTA Section */
 .cta {
   padding: 6rem 2rem;
   background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
@@ -307,34 +272,15 @@
 .cta-content h2 {
   font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 1rem;
 }
 
 .cta-content p {
   font-size: 1.25rem;
-  margin-bottom: 2rem;
   opacity: 0.9;
 }
 
-.cta-button {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: white;
-  color: #2563eb;
-  border: none;
-  padding: 1.25rem 2.5rem;
-  border-radius: 0.75rem;
-  font-size: 1.25rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-bottom: 2rem;
-}
-
-.cta-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+.cta-content button {
+  margin: 2rem;
 }
 
 .cta-info {
@@ -345,7 +291,6 @@
   opacity: 0.9;
 }
 
-/* Footer */
 .footer {
   background: #1f2937;
   color: white;
@@ -412,10 +357,6 @@
     font-size: 2.5rem;
   }
 
-  .hero-buttons {
-    justify-content: center;
-  }
-
   .features-grid {
     grid-template-columns: 1fr;
   }
@@ -443,12 +384,6 @@
 
   .hero-title {
     font-size: 2rem;
-  }
-
-  .primary-button,
-  .secondary-button {
-    width: 100%;
-    justify-content: center;
   }
 
   .features,

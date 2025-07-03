@@ -1,5 +1,6 @@
 import { FileText, Zap, Shield, Download, Check, Star } from "lucide-react";
 import "./index.css";
+import Button from "../../components/Button";
 
 export default function LandingPage() {
   return (
@@ -49,11 +50,11 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="hero-buttons">
-              <button className="primary-button">
+              <Button.Primary label="Télécharger gratuitement">
                 <Download size={20} />
-                Télécharger gratuitement
-              </button>
-              <button className="secondary-button">Voir la démo</button>
+              </Button.Primary>
+
+              <Button.Secondary label="Voir la démo" />
             </div>
           </div>
           <div className="hero-image">
@@ -91,7 +92,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Features Section */}
       <section id="features" className="features">
         <div className="features-content">
           <h2 className="section-title">Pourquoi choisir Local Invoice ?</h2>
@@ -167,10 +167,10 @@ export default function LandingPage() {
             Rejoignez des milliers d'entrepreneurs qui font confiance à Local
             Invoice
           </p>
-          <button className="cta-button">
+
+          <Button.Secondary label="Télécharger Local Invoice">
             <Download size={24} />
-            Télécharger Local Invoice
-          </button>
+          </Button.Secondary>
           <div className="cta-info">
             <span>✓ Compatible Windows, Mac & Linux</span>
             <span>✓ Installation en 1 clic</span>
