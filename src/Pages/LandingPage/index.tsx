@@ -1,23 +1,20 @@
 import { FileText, Zap, Shield, Download, Check, Star } from "lucide-react";
 import "./index.css";
 import Button from "../../components/Button";
+import Header from "../../components/Header";
 
 export default function LandingPage() {
+  const nav = (
+    <>
+      <a href="#features">Fonctionnalités</a>
+      <a href="#download">Télécharger</a>
+      <a href="#contact">Contact</a>
+    </>
+  );
+
   return (
     <div className="container">
-      <header className="header">
-        <div className="header-content">
-          <div className="logo">
-            <FileText size={32} />
-            <span>Local Invoice</span>
-          </div>
-          <nav className="nav">
-            <a href="#features">Fonctionnalités</a>
-            <a href="#download">Télécharger</a>
-            <a href="#contact">Contact</a>
-          </nav>
-        </div>
-      </header>
+      <Header navItems={nav} />
 
       <section className="hero">
         <div className="hero-content">

@@ -3,9 +3,19 @@ import { useNavigate } from "react-router-dom";
 
 import "./index.css";
 import Button from "../../components/Button";
+import Header from "../../components/Header";
 
 export default function Home() {
   const navigate = useNavigate();
+
+  const nav = (
+    <>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#clients">Clients</a>
+      <a href="#invoices">Factures</a>
+      <a href="#settings">Paramètres</a>
+    </>
+  );
 
   const handleFactureDetails = () => {
     navigate("/facture");
@@ -16,20 +26,7 @@ export default function Home() {
   };
   return (
     <div className="container">
-      <header className="header">
-        <div className="header-content">
-          <div className="logo">
-            <FileText size={32} />
-            <span>Local Invoice</span>
-          </div>
-          <nav className="nav">
-            <a href="#dashboard">Dashboard</a>
-            <a href="#clients">Clients</a>
-            <a href="#invoices">Factures</a>
-            <a href="#settings">Paramètres</a>
-          </nav>
-        </div>
-      </header>
+      <Header navItems={nav} />
 
       <main className="dashboard">
         <h1 className="section-title">Bienvenue dans votre espace</h1>

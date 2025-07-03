@@ -1,29 +1,21 @@
-import React from "react";
+import { FileText } from "lucide-react";
+import { ReactNode } from "react";
+import "./index.css";
 
-const Header: React.FC = () => {
-  return (
-    <header>
-      <nav>
-        <ul>
-          <li>
-            <a href="#">Accueil</a>
-          </li>
-          <li>
-            <a href="#">Devis</a>
-          </li>
-          <li>
-            <a href="#">Factures</a>
-          </li>
-          <li>
-            <a href="#">Clients</a>
-          </li>
-          <li>
-            <a href="#">Paramètres</a>
-          </li>
-        </ul>
-      </nav>
-    </header>
-  );
+type HeaderProps = {
+  navItems?: ReactNode;
 };
 
-export default Header;
+export default function Header({ navItems }: HeaderProps) {
+  return (
+    <header className="header">
+      <div className="header-content">
+        <div className="logo">
+          <FileText size={32} />
+          <span>Local Invoice</span>
+        </div>
+        <nav className="nav">{navItems}</nav>
+      </div>
+    </header>
+  );
+}
