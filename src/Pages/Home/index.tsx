@@ -12,7 +12,7 @@ export default function Home() {
   const nav = (
     <>
       <a href="#dashboard">Dashboard</a>
-      <a href="#clients">Clients</a>
+      <a href="/clients">Clients</a>
       <a href="#invoices">Factures</a>
       <a href="#settings">Paramètres</a>
     </>

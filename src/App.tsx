@@ -4,6 +4,7 @@ import Home from "./Pages/Home";
 import EditorPage from "./Pages/Editor";
 import "./App.css";
 import LandingPage from "./Pages/LandingPage";
+import Clients from "./Pages/Clients";
 
 const App: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const App: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/facture" element={<EditorPage mode="facture" />} />
         <Route path="/devis" element={<EditorPage mode="devis" />} />
+        <Route path="/clients" element={<Clients />} />
       </Routes>
     </Router>
   );
