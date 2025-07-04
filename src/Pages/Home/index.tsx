@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "./index.css";
 import Button from "../../components/Button";
 import Header from "../../components/Header";
+import Footer from "../../components/Footer";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -78,23 +79,7 @@ export default function Home() {
           </div>
         </div>
       </main>
-
-      <footer className="footer">
-        <div className="footer-content">
-          <div className="footer-logo">
-            <FileText size={24} />
-            <span>Local Invoice</span>
-          </div>
-          <div className="footer-links">
-            <a href="#privacy">Confidentialité</a>
-            <a href="#terms">Conditions</a>
-            <a href="#support">Support</a>
-          </div>
-        </div>
-        <div className="footer-bottom">
-          <p>&copy; 2025 Local Invoice. Tous droits réservés.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
