@@ -29,7 +29,7 @@ export default function CreateClients() {
 
   const nav = (
     <>
-      <a href="#dashboard">Dashboard</a>
+      <a href="/">Dashboard</a>
       <a href="#clients">Clients</a>
       <a href="#invoices">Factures</a>
       <a href="#settings">Paramètres</a>
