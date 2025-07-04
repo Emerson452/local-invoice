@@ -19,7 +19,7 @@ export default function Clients() {
   );
 
   const handleAddClient = () => {
-    navigate("/ajouter-client");
+    navigate("/create-clients");
   };
 
   return (
