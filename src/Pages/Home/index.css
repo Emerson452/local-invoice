@@ -1,7 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
 .dashboard {
-  padding: 10rem 2rem 4rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 10rem 4rem 4rem;
 }
 
 .dashboard-actions {
