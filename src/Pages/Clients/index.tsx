@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { UserPlus, Users, Mail, Phone } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +9,7 @@ import Footer from "../../components/Footer";
 
 export default function Clients() {
   const navigate = useNavigate();
+  const [clients, setClients] = useState<any[]>([]);
 
   const nav = (
     <>
@@ -21,6 +23,16 @@ export default function Clients() {
   const handleAddClient = () => {
     navigate("/create-clients");
   };
+
+  useEffect(() => {
+    const load = async () => {
+      if (window.electronAPI?.loadClients) {
+        const loadedClients = await window.electronAPI.loadClients();
+        setClients(loadedClients);
+      }
+    };
+    load();
+  }, []);
 
   return (
     <div className="container">
@@ -36,28 +48,30 @@ export default function Clients() {
         </div>
 
         <div className="clients-grid">
-          <div className="client-card">
-            <div className="client-header">
-              <div className="client-avatar">
-                <Users size={28} />
+          {clients.map((client, index) => (
+            <div key={index} className="client-card">
+              <div className="client-header">
+                <div className="client-avatar">
+                  <Users size={28} />
+                </div>
+                <div>
+                  <h3>{client.nom}</h3>
+                  <p className="client-company">{client.entreprise}</p>
+                </div>
               </div>
-              <div>
-                <h3>Marie Dupont</h3>
-                <p className="client-company">Dupont Design</p>
-              </div>
-            </div>
 
-            <div className="client-info">
-              <div className="client-line">
-                <Mail size={16} />
-                <span>marie.dupont@email.com</span>
-              </div>
-              <div className="client-line">
-                <Phone size={16} />
-                <span>+33 6 12 34 56 78</span>
+              <div className="client-info">
+                <div className="client-line">
+                  <Mail size={16} />
+                  <span>{client.email}</span>
+                </div>
+                <div className="client-line">
+                  <Phone size={16} />
+                  <span>{client.telephone}</span>
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </main>
 

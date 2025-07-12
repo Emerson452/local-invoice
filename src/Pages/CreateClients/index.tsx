@@ -24,7 +24,13 @@ export default function CreateClients() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (window.electronAPI?.saveClient) {
+      window.electronAPI.saveClient(form);
+    }
+
     navigate("/clients");
+    window.location.reload();
   };
 
   const nav = (
