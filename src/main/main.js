@@ -1,19 +1,31 @@
-const { app, BrowserWindow, ipcMain } = require("electron");
-const path = require("path");
-const fs = require("fs");
+import { app, BrowserWindow, ipcMain } from "electron";
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 function createWindow() {
-  const win = new BrowserWindow({
-    width: 1000,
-    height: 800,
-    webPreferences: {
-      nodeIntegration: false,
-      contextIsolation: true,
-      preload: path.join(__dirname, "preload.js"),
-    },
-  });
+  try {
+    const win = new BrowserWindow({
+      width: 1000,
+      height: 800,
+      webPreferences: {
+        nodeIntegration: false,
+        contextIsolation: true,
+        preload: path.join(__dirname, "preload.js"),
+      },
+    });
 
-  win.loadURL("http://localhost:5173");
+    win.loadURL("http://localhost:5173");
+
+    win.webContents.openDevTools();
+
+    console.log("✅ Fenêtre créée avec succès !");
+  } catch (err) {
+    console.error("❌ Erreur lors de la création de la fenêtre:", err);
+  }
 }
 
 ipcMain.on("save-client", (event, client) => {
