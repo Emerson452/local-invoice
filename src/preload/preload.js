@@ -1,12 +1,6 @@
-import { contextBridge, ipcRenderer } from "electron";
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const { contextBridge, ipcRenderer } = require("electron");
 
 console.log("✅ Preload chargé !");
-console.log("🔍 preload path:", path.join(__dirname, "preload.js"));
 
 contextBridge.exposeInMainWorld("electronAPI", {
   saveClient: (client) => {
