@@ -29,7 +29,8 @@ function createWindow() {
 }
 
 ipcMain.on("save-client", (event, client) => {
-  const filePath = path.join(app.getPath("userData"), "clients.json");
+  const filePath = path.join(__dirname, "../../data/clients.json");
+
   console.log("💾 Enregistrement du client :", client);
   console.log("📁 Fichier cible :", filePath);
   let clients = [];
@@ -44,7 +45,7 @@ ipcMain.on("save-client", (event, client) => {
 });
 
 ipcMain.handle("load-clients", async () => {
-  const filePath = path.join(app.getPath("userData"), "clients.json");
+  const filePath = path.join(__dirname, "../../data/clients.json");
 
   if (!fs.existsSync(filePath)) return [];
 
