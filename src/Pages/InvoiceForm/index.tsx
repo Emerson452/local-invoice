@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./index.css";
-import Input from "../Input";
+import Input from "../../components/Input";
 
 interface SelectFieldProps {
   label?: string;
