@@ -11,7 +11,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/lading-page" element={<LandingPage />} />
+        <Route path="/landing-page" element={<LandingPage />} />
 
         <Route path="/" element={<Home />} />
         <Route path="/facture" element={<EditorPage mode="facture" />} />
