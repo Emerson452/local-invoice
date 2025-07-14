@@ -1,5 +1,36 @@
 import React, { useState, useEffect } from "react";
 import "./index.css";
+import Input from "../Input";
+
+interface SelectFieldProps {
+  label?: string;
+  name: string;
+  value: string | number;
+  options: { label: string; value: string | number }[];
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  error?: string;
+}
+
+const SelectField: React.FC<SelectFieldProps> = ({
+  label,
+  name,
+  value,
+  options,
+  onChange,
+  error,
+}) => (
+  <div className="select-field">
+    {label && <label htmlFor={name}>{label}</label>}
+    <select id={name} name={name} value={value} onChange={onChange}>
+      {options.map(({ label, value }) => (
+        <option key={value} value={value}>
+          {label}
+        </option>
+      ))}
+    </select>
+    {error && <span className="error">{error}</span>}
+  </div>
+);
 
 interface InvoiceFormProps {
   onSubmit: (data: any) => void;
@@ -41,7 +72,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
     clientCode: "",
     categories: [
       {
-        name: "", // Nom de la catégorie
+        name: "",
         items: [
           {
             description: "",
@@ -51,7 +82,7 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
             unitPrice: 0,
             vat: 0,
           },
-        ], // Liste d'items sous cette catégorie
+        ],
       },
     ],
     paymentTerms: "0",
@@ -204,52 +235,52 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
                 onChange={handleFileChange}
                 className="hidden-file-input"
               />
-
               <label htmlFor="fileInput" className="primary-input">
                 Choisir une image
               </label>
             </div>
             <div className="input-container">
-              <input
-                type="text"
+              <Input
                 name="companyName"
                 placeholder="Nom de l'entreprise"
+                value={formData.companyName}
                 onChange={handleChange}
               />
-              <input
-                type="text"
+              <Input
                 name="companySiret"
                 placeholder="Siret"
+                value={formData.companySiret}
                 onChange={handleChange}
               />
-              <input
-                type="text"
+              <Input
                 name="companyAddress"
                 placeholder="Adresse"
+                value={formData.companyAddress}
                 onChange={handleChange}
               />
-              <input
-                type="text"
+              <Input
                 name="companyPostalCode"
                 placeholder="Code Postal"
+                value={formData.companyPostalCode}
                 onChange={handleChange}
               />
-              <input
-                type="text"
+              <Input
                 name="companyCity"
                 placeholder="Ville"
+                value={formData.companyCity}
                 onChange={handleChange}
               />
-              <input
-                type="text"
+              <Input
                 name="myPhone"
                 placeholder="Votre numéro de téléphone"
+                value={formData.myPhone}
                 onChange={handleChange}
               />
-              <input
-                type="email"
+              <Input
                 name="myEmail"
                 placeholder="Votre email"
+                type="email"
+                value={formData.myEmail}
                 onChange={handleChange}
               />
             </div>
@@ -261,46 +292,47 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
             {mode === "facture" ? "Détails de la facture" : "Détails du devis"}
           </h2>
           <div className="input-container">
-            <input
-              type="text"
+            <Input
               name="invoiceYear"
               placeholder="Année de la facture"
+              value={formData.invoiceYear}
               onChange={handleChange}
             />
-            <input
-              type="text"
+            <Input
               name="invoiceNumber"
               placeholder="Numéro de facture"
+              value={formData.invoiceNumber}
               onChange={handleChange}
             />
-            <input
-              type="date"
+            <Input
               name="invoiceDate"
+              type="date"
               value={formData.invoiceDate}
               onChange={handleChange}
             />
-            <select
+            <SelectField
               name="paymentTerms"
               value={formData.paymentTerms}
               onChange={handleChange}
-            >
-              <option value="0">0 jours</option>
-              <option value="7">7 jours</option>
-              <option value="14">14 jours</option>
-              <option value="30">30 jours</option>
-              <option value="60">60 jours</option>
-              <option value="90">90 jours</option>
-            </select>
-            <input
-              type="date"
-              name="dueDate"
-              value={formData.dueDate}
-              readOnly
+              options={[
+                { label: "0 jours", value: "0" },
+                { label: "7 jours", value: "7" },
+                { label: "14 jours", value: "14" },
+                { label: "30 jours", value: "30" },
+                { label: "60 jours", value: "60" },
+                { label: "90 jours", value: "90" },
+              ]}
             />
-            <input
-              type="text"
+            <Input
+              name="dueDate"
+              type="date"
+              value={formData.dueDate}
+              onChange={() => {}}
+            />
+            <Input
               name="operationType"
               placeholder="Type d'opération"
+              value={formData.operationType}
               onChange={handleChange}
             />
           </div>
@@ -309,46 +341,46 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
       <div className="form-section">
         <h2>Détails du client</h2>
         <div className="input-container">
-          <input
-            type="text"
+          <Input
             name="clientCompany"
             placeholder="Nom de l'entreprise"
+            value={formData.clientCompany}
             onChange={handleChange}
           />
-          <input
-            type="text"
+          <Input
             name="clientAddress"
             placeholder="Adresse"
+            value={formData.clientAddress}
             onChange={handleChange}
           />
-          <input
-            type="text"
+          <Input
             name="clientPostalCode"
             placeholder="Code Postal"
+            value={formData.clientPostalCode}
             onChange={handleChange}
           />
-          <input
-            type="text"
+          <Input
             name="clientCity"
             placeholder="Ville"
+            value={formData.clientCity}
             onChange={handleChange}
           />
-          <input
-            type="text"
+          <Input
             name="clientSIRET"
             placeholder="Numéro de SIRET"
+            value={formData.clientSIRET}
             onChange={handleChange}
           />
-          <input
-            type="text"
+          <Input
             name="clientPhone"
             placeholder="Numéro de téléphone"
+            value={formData.clientPhone}
             onChange={handleChange}
           />
-          <input
-            type="text"
+          <Input
             name="clientCode"
             placeholder="Code client"
+            value={formData.clientCode}
             onChange={handleChange}
           />
         </div>
