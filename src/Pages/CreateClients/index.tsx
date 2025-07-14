@@ -4,6 +4,7 @@ import "./index.css";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import Button from "../../components/Button";
+import Input from "../../components/Input";
 
 export default function CreateClients() {
   const navigate = useNavigate();
@@ -52,9 +53,8 @@ export default function CreateClients() {
         <form className="form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="nom">Nom complet</label>
-            <input
+            <Input
               type="text"
-              id="nom"
               name="nom"
               value={form.nom}
               onChange={handleChange}
@@ -64,9 +64,8 @@ export default function CreateClients() {
 
           <div className="form-group">
             <label htmlFor="entreprise">Entreprise</label>
-            <input
+            <Input
               type="text"
-              id="entreprise"
               name="entreprise"
               value={form.entreprise}
               onChange={handleChange}
@@ -75,9 +74,8 @@ export default function CreateClients() {
 
           <div className="form-group">
             <label htmlFor="email">Email</label>
-            <input
+            <Input
               type="email"
-              id="email"
               name="email"
               value={form.email}
               onChange={handleChange}
@@ -87,9 +85,8 @@ export default function CreateClients() {
 
           <div className="form-group">
             <label htmlFor="telephone">Téléphone</label>
-            <input
+            <Input
               type="tel"
-              id="telephone"
               name="telephone"
               value={form.telephone}
               onChange={handleChange}

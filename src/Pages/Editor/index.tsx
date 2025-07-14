@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import InvoiceForm from "../../components/InvoiceForm";
+import InvoiceForm from "../InvoiceForm";
 import InvoicePreview from "../../components/InvoicePreview";
 
 interface EditorPageProps {

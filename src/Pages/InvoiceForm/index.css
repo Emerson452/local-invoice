@@ -61,33 +61,10 @@
   gap: 10px;
 }
 
-.form-section input,
-select {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.form-section input[type="file"] {
-  border: none;
-  width: auto;
-}
-
 .item {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-}
-
-.item input,
-.item select {
-  flex: 1;
-  min-width: 120px;
-}
-
-input[type="file"] {
-  margin: 15px 0;
 }
 
 textarea {

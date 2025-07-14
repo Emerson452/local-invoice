@@ -9,9 +9,10 @@ interface InputProps {
   placeholder?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   error?: string;
+  required?: boolean;
 }
 
-const InputField: React.FC<InputProps> = ({
+const Input: React.FC<InputProps> = ({
   label,
   name,
   value,
@@ -19,6 +20,7 @@ const InputField: React.FC<InputProps> = ({
   placeholder,
   onChange,
   error,
+  required = false,
 }) => (
   <div className="input-field">
     {label && <label htmlFor={name}>{label}</label>}
@@ -29,9 +31,10 @@ const InputField: React.FC<InputProps> = ({
       type={type}
       placeholder={placeholder}
       onChange={onChange}
+      required={required}
     />
     {error && <span className="error">{error}</span>}
   </div>
 );
 
-export default InputField;
+export default Input;

@@ -1,36 +1,11 @@
 import React, { useState, useEffect } from "react";
+
 import "./index.css";
+import Header from "../../components/Header";
 import Input from "../../components/Input";
-
-interface SelectFieldProps {
-  label?: string;
-  name: string;
-  value: string | number;
-  options: { label: string; value: string | number }[];
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  error?: string;
-}
-
-const SelectField: React.FC<SelectFieldProps> = ({
-  label,
-  name,
-  value,
-  options,
-  onChange,
-  error,
-}) => (
-  <div className="select-field">
-    {label && <label htmlFor={name}>{label}</label>}
-    <select id={name} name={name} value={value} onChange={onChange}>
-      {options.map(({ label, value }) => (
-        <option key={value} value={value}>
-          {label}
-        </option>
-      ))}
-    </select>
-    {error && <span className="error">{error}</span>}
-  </div>
-);
+import Select from "../../components/Select";
+import Button from "../../components/Button";
+import Footer from "../../components/Footer";
 
 interface InvoiceFormProps {
   onSubmit: (data: any) => void;
@@ -38,6 +13,15 @@ interface InvoiceFormProps {
 }
 
 const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
+  const nav = (
+    <>
+      <a href="/">Dashboard</a>
+      <a href="/clients">Clients</a>
+      <a href="#invoices">Factures</a>
+      <a href="#settings">Paramètres</a>
+    </>
+  );
+
   const getTodayDate = () => {
     const today = new Date();
     const year = today.getFullYear();
@@ -221,284 +205,287 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="invoice-form">
-      <div className="invoice-split">
-        <div className="form-section">
-          <h2>Détails de l'entreprise</h2>
-          <div className="invoice-split">
-            <div className="invoice-image">
-              {logoUrl && <img src={logoUrl} alt="Logo de l'entreprise" />}
-              <input
-                type="file"
-                id="fileInput"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="hidden-file-input"
-              />
-              <label htmlFor="fileInput" className="primary-input">
-                Choisir une image
-              </label>
+    <div className="container">
+      <Header navItems={nav} />
+      <form onSubmit={handleSubmit} className="invoice-form">
+        <div className="invoice-split">
+          <div className="form-section">
+            <h2>Détails de l'entreprise</h2>
+            <div className="invoice-split">
+              <div className="invoice-image">
+                {logoUrl && <img src={logoUrl} alt="Logo de l'entreprise" />}
+                <input
+                  type="file"
+                  id="fileInput"
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="hidden-file-input"
+                />
+                <label htmlFor="fileInput" className="primary-input">
+                  Choisir une image
+                </label>
+              </div>
+              <div className="input-container">
+                <Input
+                  name="companyName"
+                  placeholder="Nom de l'entreprise"
+                  value={formData.companyName}
+                  onChange={handleChange}
+                />
+                <Input
+                  name="companySiret"
+                  placeholder="Siret"
+                  value={formData.companySiret}
+                  onChange={handleChange}
+                />
+                <Input
+                  name="companyAddress"
+                  placeholder="Adresse"
+                  value={formData.companyAddress}
+                  onChange={handleChange}
+                />
+                <Input
+                  name="companyPostalCode"
+                  placeholder="Code Postal"
+                  value={formData.companyPostalCode}
+                  onChange={handleChange}
+                />
+                <Input
+                  name="companyCity"
+                  placeholder="Ville"
+                  value={formData.companyCity}
+                  onChange={handleChange}
+                />
+                <Input
+                  name="myPhone"
+                  placeholder="Votre numéro de téléphone"
+                  value={formData.myPhone}
+                  onChange={handleChange}
+                />
+                <Input
+                  name="myEmail"
+                  placeholder="Votre email"
+                  type="email"
+                  value={formData.myEmail}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
+          </div>
+
+          <div className="form-section">
+            <h2>
+              {mode === "facture"
+                ? "Détails de la facture"
+                : "Détails du devis"}
+            </h2>
             <div className="input-container">
               <Input
-                name="companyName"
-                placeholder="Nom de l'entreprise"
-                value={formData.companyName}
+                name="invoiceYear"
+                placeholder="Année de la facture"
+                value={formData.invoiceYear}
                 onChange={handleChange}
               />
               <Input
-                name="companySiret"
-                placeholder="Siret"
-                value={formData.companySiret}
+                name="invoiceNumber"
+                placeholder="Numéro de facture"
+                value={formData.invoiceNumber}
                 onChange={handleChange}
               />
               <Input
-                name="companyAddress"
-                placeholder="Adresse"
-                value={formData.companyAddress}
+                name="invoiceDate"
+                type="date"
+                value={formData.invoiceDate}
                 onChange={handleChange}
               />
-              <Input
-                name="companyPostalCode"
-                placeholder="Code Postal"
-                value={formData.companyPostalCode}
+              <Select
+                name="paymentTerms"
+                value={formData.paymentTerms}
                 onChange={handleChange}
+                options={[
+                  { label: "0 jours", value: "0" },
+                  { label: "7 jours", value: "7" },
+                  { label: "14 jours", value: "14" },
+                  { label: "30 jours", value: "30" },
+                  { label: "60 jours", value: "60" },
+                  { label: "90 jours", value: "90" },
+                ]}
               />
               <Input
-                name="companyCity"
-                placeholder="Ville"
-                value={formData.companyCity}
-                onChange={handleChange}
+                name="dueDate"
+                type="date"
+                value={formData.dueDate}
+                onChange={() => {}}
               />
               <Input
-                name="myPhone"
-                placeholder="Votre numéro de téléphone"
-                value={formData.myPhone}
-                onChange={handleChange}
-              />
-              <Input
-                name="myEmail"
-                placeholder="Votre email"
-                type="email"
-                value={formData.myEmail}
+                name="operationType"
+                placeholder="Type d'opération"
+                value={formData.operationType}
                 onChange={handleChange}
               />
             </div>
           </div>
         </div>
-
         <div className="form-section">
-          <h2>
-            {mode === "facture" ? "Détails de la facture" : "Détails du devis"}
-          </h2>
+          <h2>Détails du client</h2>
           <div className="input-container">
             <Input
-              name="invoiceYear"
-              placeholder="Année de la facture"
-              value={formData.invoiceYear}
+              name="clientCompany"
+              placeholder="Nom de l'entreprise"
+              value={formData.clientCompany}
               onChange={handleChange}
             />
             <Input
-              name="invoiceNumber"
-              placeholder="Numéro de facture"
-              value={formData.invoiceNumber}
+              name="clientAddress"
+              placeholder="Adresse"
+              value={formData.clientAddress}
               onChange={handleChange}
             />
             <Input
-              name="invoiceDate"
-              type="date"
-              value={formData.invoiceDate}
+              name="clientPostalCode"
+              placeholder="Code Postal"
+              value={formData.clientPostalCode}
               onChange={handleChange}
             />
-            <SelectField
-              name="paymentTerms"
-              value={formData.paymentTerms}
+            <Input
+              name="clientCity"
+              placeholder="Ville"
+              value={formData.clientCity}
               onChange={handleChange}
-              options={[
-                { label: "0 jours", value: "0" },
-                { label: "7 jours", value: "7" },
-                { label: "14 jours", value: "14" },
-                { label: "30 jours", value: "30" },
-                { label: "60 jours", value: "60" },
-                { label: "90 jours", value: "90" },
-              ]}
             />
             <Input
-              name="dueDate"
-              type="date"
-              value={formData.dueDate}
-              onChange={() => {}}
+              name="clientSIRET"
+              placeholder="Numéro de SIRET"
+              value={formData.clientSIRET}
+              onChange={handleChange}
             />
             <Input
-              name="operationType"
-              placeholder="Type d'opération"
-              value={formData.operationType}
+              name="clientPhone"
+              placeholder="Numéro de téléphone"
+              value={formData.clientPhone}
+              onChange={handleChange}
+            />
+            <Input
+              name="clientCode"
+              placeholder="Code client"
+              value={formData.clientCode}
               onChange={handleChange}
             />
           </div>
         </div>
-      </div>
-      <div className="form-section">
-        <h2>Détails du client</h2>
-        <div className="input-container">
-          <Input
-            name="clientCompany"
-            placeholder="Nom de l'entreprise"
-            value={formData.clientCompany}
-            onChange={handleChange}
-          />
-          <Input
-            name="clientAddress"
-            placeholder="Adresse"
-            value={formData.clientAddress}
-            onChange={handleChange}
-          />
-          <Input
-            name="clientPostalCode"
-            placeholder="Code Postal"
-            value={formData.clientPostalCode}
-            onChange={handleChange}
-          />
-          <Input
-            name="clientCity"
-            placeholder="Ville"
-            value={formData.clientCity}
-            onChange={handleChange}
-          />
-          <Input
-            name="clientSIRET"
-            placeholder="Numéro de SIRET"
-            value={formData.clientSIRET}
-            onChange={handleChange}
-          />
-          <Input
-            name="clientPhone"
-            placeholder="Numéro de téléphone"
-            value={formData.clientPhone}
-            onChange={handleChange}
-          />
-          <Input
-            name="clientCode"
-            placeholder="Code client"
-            value={formData.clientCode}
-            onChange={handleChange}
-          />
-        </div>
-      </div>
 
-      <div className="form-section long">
-        <h2>Catégories</h2>
-        <div className="input-container">
-          {formData.categories.map((category, categoryIndex) => (
-            <div key={categoryIndex} className="category">
-              <input
-                type="text"
-                name="name"
-                placeholder="Nom de la catégorie"
-                value={category.name}
-                onChange={(e) => handleChange(e, categoryIndex)}
-              />
-              <div className="items-container">
-                {category.items.map((item, itemIndex) => (
-                  <div key={itemIndex} className="item">
-                    <input
-                      type="text"
-                      name="description"
-                      placeholder="Description de l'article"
-                      value={item.description}
-                      onChange={(e) =>
-                        handleChange(e, categoryIndex, itemIndex)
-                      }
-                    />
-                    <input
-                      type="date"
-                      name="date"
-                      value={item.date}
-                      onChange={(e) =>
-                        handleChange(e, categoryIndex, itemIndex)
-                      }
-                    />
-                    <input
-                      type="number"
-                      name="quantity"
-                      placeholder="Quantité"
-                      value={item.quantity}
-                      onChange={(e) =>
-                        handleChange(e, categoryIndex, itemIndex)
-                      }
-                    />
-                    <select
-                      name="unit"
-                      value={item.unit}
-                      onChange={(e) =>
-                        handleChange(e, categoryIndex, itemIndex)
-                      }
-                    >
-                      <option value="forfait">forfait</option>
-                      <option value="jours">jours</option>
-                      <option value="h">h</option>
-                    </select>
-                    <input
-                      type="number"
-                      name="unitPrice"
-                      placeholder="Prix unitaire"
-                      value={item.unitPrice}
-                      onChange={(e) =>
-                        handleChange(e, categoryIndex, itemIndex)
-                      }
-                    />
-                    <input
-                      type="number"
-                      name="vat"
-                      placeholder="TVA"
-                      value={item.vat}
-                      onChange={(e) =>
-                        handleChange(e, categoryIndex, itemIndex)
-                      }
-                    />
-                    <button
-                      type="button"
-                      className="remove-item"
-                      onClick={() => handleRemoveItem(categoryIndex, itemIndex)}
-                    >
-                      Supprimer l'article
-                    </button>
-                  </div>
-                ))}
+        <div className="form-section long">
+          <h2>Catégories</h2>
+          <div className="input-container">
+            {formData.categories.map((category, categoryIndex) => (
+              <div key={categoryIndex} className="category">
+                <Input
+                  type="text"
+                  name="name"
+                  placeholder="Nom de la catégorie"
+                  value={category.name}
+                  onChange={(e) => handleChange(e, categoryIndex)}
+                />
+                <div className="items-container">
+                  {category.items.map((item, itemIndex) => (
+                    <div key={itemIndex} className="item">
+                      <Input
+                        type="text"
+                        name="description"
+                        placeholder="Description de l'article"
+                        value={item.description}
+                        onChange={(e) =>
+                          handleChange(e, categoryIndex, itemIndex)
+                        }
+                      />
+                      <Input
+                        type="date"
+                        name="date"
+                        value={item.date}
+                        onChange={(e) =>
+                          handleChange(e, categoryIndex, itemIndex)
+                        }
+                      />
+                      <Input
+                        type="number"
+                        name="quantity"
+                        placeholder="Quantité"
+                        value={item.quantity}
+                        onChange={(e) =>
+                          handleChange(e, categoryIndex, itemIndex)
+                        }
+                      />
+                      <Select
+                        name="unit"
+                        value={item.unit}
+                        onChange={(e) =>
+                          handleChange(e, categoryIndex, itemIndex)
+                        }
+                        options={[
+                          { label: "forfait", value: "forfait" },
+                          { label: "jours", value: "jours" },
+                          { label: "h", value: "h" },
+                        ]}
+                      />
+                      <Input
+                        type="number"
+                        name="unitPrice"
+                        placeholder="Prix unitaire"
+                        value={item.unitPrice}
+                        onChange={(e) =>
+                          handleChange(e, categoryIndex, itemIndex)
+                        }
+                      />
+                      <Input
+                        type="number"
+                        name="vat"
+                        placeholder="TVA"
+                        value={item.vat}
+                        onChange={(e) =>
+                          handleChange(e, categoryIndex, itemIndex)
+                        }
+                      />
+                      <Button.Secondary
+                        onClick={() =>
+                          handleRemoveItem(categoryIndex, itemIndex)
+                        }
+                        label="Supprimer l'article"
+                      />
+                    </div>
+                  ))}
+                </div>
+                <Button.Secondary
+                  onClick={() => handleAddItem(categoryIndex)}
+                  label="+ Ajouter un article"
+                />
+                <Button.Secondary
+                  onClick={() => handleRemoveCategory(categoryIndex)}
+                  label="Supprimer la catégorie"
+                />
               </div>
-              <button
-                type="button"
-                onClick={() => handleAddItem(categoryIndex)}
-              >
-                + Ajouter un article
-              </button>
-              <button
-                type="button"
-                onClick={() => handleRemoveCategory(categoryIndex)}
-              >
-                Supprimer la catégorie
-              </button>
-            </div>
-          ))}
-        </div>
-        <button type="button" onClick={handleAddCategory}>
-          + Ajouter une catégorie
-        </button>
-      </div>
-
-      <div className="form-section long">
-        <h2>Texte de bas de page</h2>
-        <div className="input-container">
-          <textarea
-            name="delay"
-            placeholder="Texte de bas de page"
-            onChange={handleChange}
+            ))}
+          </div>
+          <Button.Secondary
+            onClick={handleAddCategory}
+            label="+ Ajouter une catégorie"
           />
         </div>
-      </div>
 
-      <button type="submit">Générer la Facture</button>
-    </form>
+        <div className="form-section long">
+          <h2>Texte de bas de page</h2>
+          <div className="input-container">
+            <textarea
+              name="delay"
+              placeholder="Texte de bas de page"
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        <Button.Primary type="submit" label="Générer la Facture" />
+      </form>
+      <Footer />
+    </div>
   );
 };
 
