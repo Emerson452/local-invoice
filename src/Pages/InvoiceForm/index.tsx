@@ -69,6 +69,10 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
         ],
       },
     ],
+    bankName: "",
+    bankAccountHolder: "",
+    bankIBAN: "",
+    bankBIC: "",
     paymentTerms: "0",
     delay: "",
     myPhone: "",
@@ -469,6 +473,36 @@ const InvoiceForm: React.FC<InvoiceFormProps> = ({ onSubmit, mode }) => {
             onClick={handleAddCategory}
             label="+ Ajouter une catégorie"
           />
+        </div>
+
+        <div className="form-section">
+          <h2>Identité bancaire</h2>
+          <div className="input-container">
+            <Input
+              name="bankAccountHolder"
+              placeholder="Titulaire du compte"
+              value={formData.bankAccountHolder}
+              onChange={handleChange}
+            />
+            <Input
+              name="bankName"
+              placeholder="Nom de la banque"
+              value={formData.bankName}
+              onChange={handleChange}
+            />
+            <Input
+              name="bankIBAN"
+              placeholder="IBAN"
+              value={formData.bankIBAN}
+              onChange={handleChange}
+            />
+            <Input
+              name="bankBIC"
+              placeholder="BIC / SWIFT"
+              value={formData.bankBIC}
+              onChange={handleChange}
+            />
+          </div>
         </div>
 
         <div className="form-section long">

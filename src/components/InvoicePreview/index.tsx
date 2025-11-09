@@ -42,6 +42,10 @@ interface InvoiceData {
   categories: InvoiceCategory[];
   paymentTerms: string;
   delay: string;
+  bankName: string;
+  bankAccountHolder: string;
+  bankIBAN: string;
+  bankBIC: string;
 }
 
 interface InvoicePreviewProps {
@@ -281,6 +285,32 @@ const InvoicePreview: React.FC<InvoicePreviewProps> = ({ data, mode }) => {
             <p className="strong">Validité du devis: </p>
           )}
           <p>{paymentTerms} jours</p>
+        </div>
+
+        <div className="bank-details">
+          <h3>Coordonnées bancaires :</h3>
+          <ul>
+            {data.bankAccountHolder && (
+              <li>
+                <strong>Titulaire du compte :</strong> {data.bankAccountHolder}
+              </li>
+            )}
+            {data.bankName && (
+              <li>
+                <strong>Banque :</strong> {data.bankName}
+              </li>
+            )}
+            {data.bankIBAN && (
+              <li>
+                <strong>IBAN :</strong> {data.bankIBAN}
+              </li>
+            )}
+            {data.bankBIC && (
+              <li>
+                <strong>BIC / SWIFT :</strong> {data.bankBIC}
+              </li>
+            )}
+          </ul>
         </div>
 
         <div className="invoice-delay">{delay}</div>
